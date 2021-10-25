@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  border-radius: 36px;
+  background: aquamarine;
+  transition: 0.3s ease all;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+  display: block;
+  margin-top: 2rem;
+}
+
+.btn:hover {
+  background: rgb(127, 255, 242);
+}
+
+.container p {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}

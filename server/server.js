@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const rootDir = require("./helpers/path.helper");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // Routes imports
 const homeRouter = require("./routes/home.routes");
@@ -19,6 +20,15 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('public'));
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
+// view engine
+app.set('view engine', 'ejs');
 
 // Database connection & app start
 mongoose.connect(process.env.dbURI)

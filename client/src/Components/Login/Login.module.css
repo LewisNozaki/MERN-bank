@@ -36,7 +36,8 @@
 
 .login-form input[type=submit] {
   margin: 2rem 0;
-  background: #FEE996;
+  background: #8c1ffa;
+  color: white;
   border: none;
   transition: 0.3s ease all;
   cursor: pointer;
@@ -44,7 +45,8 @@
 }
 
 .login-form input[type=submit]:hover {
-  background: #f4ce37;
+  background: #c71ffa;
+  color: white;
 }
 
 .login-form label {

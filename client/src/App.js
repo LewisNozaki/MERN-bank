@@ -1,11 +1,35 @@
 import './App.css';
-import Header from "./Components/Header/Header";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
+import Home from "./components/Home/Home";
+import NotFound from "./components/NotFound/NotFound";
+import Header from "./components/Header/Header";
 
 const App = () => {
   return (
-    <div className="App">
-      <Header />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        
+        <div className="route-path">
+          <Switch>
+            <Route path="/" exact
+              component={Home}
+            />
+            <Route path="/login/" exact
+              component={Login}
+            />
+            <Route path="/signup/" exact
+              component={Signup}
+            />
+            <Route path="*" exact
+              component={NotFound}
+            />
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 
