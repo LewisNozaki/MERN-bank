@@ -1,13 +1,14 @@
 import React from "react";
-import { Route, Link, HashRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import Home from "../Home/Home";
+import NotFound from "../NotFound/NotFound";
 import styles from "./Header.module.css";
 
 const Header = () => {
   return (
-    <HashRouter>
+    <Router>
       <nav className={styles["main-header"]}>
         <h1><Link to="/">MERN Bank</Link></h1>
         <ul>
@@ -17,17 +18,22 @@ const Header = () => {
       </nav>
       
       <div className="route-path">
-        <Route path="/" exact
-          component={() => <Home />}
-        />
-        <Route path="/login" 
-          component={() => <Login />}
-        />
-        <Route path="/signup" 
-          component={() => <Signup />}
-        />
+        <Switch>
+          <Route path="/" exact
+            component={Home}
+          />
+          <Route path="/login/" exact
+            component={Login}
+          />
+          <Route path="/signup/" exact
+            component={Signup}
+          />
+          <Route path="*" exact
+            component={NotFound}
+          />
+        </Switch>
       </div>
-    </HashRouter>
+    </Router>
   )
 };
 

@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 // Routes imports
 const homeRouter = require("./routes/home.routes");
 const authRouter = require("./routes/auth.routes");
+const { checkUser } = require("./helpers/jwt.helper");
 
 require("dotenv").config({ path: path.join(rootDir, "secure", ".env") });
 
@@ -28,6 +29,8 @@ mongoose.connect(process.env.dbURI)
   .catch(err => console.log(err));
 
 // Routes
+app.use("*", checkUser);
+
 app.use(authRouter);
 
 app.use(homeRouter);

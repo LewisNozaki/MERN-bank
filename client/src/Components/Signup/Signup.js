@@ -1,31 +1,42 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./Signup.module.css";
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isValid, setIsValid] = useState(false);
 
+  let history = useHistory();
+  
   const usernameInput = (e) => {
     setEmail(e.target.value);
-    setIsValid(true);
   };
 
   const passwordInput = (e) => {
     setPassword(e.target.value);
-    setIsValid(true);
   }
-
-  const handleSignup = (e) => {
+  
+  const handleSignup = async (e) => {
     e.preventDefault();
-
-    console.log({ email, password });
-
     
+    try {
+      const result = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      })
 
-    setEmail('');
-    setPassword('');
+      const data = await result.json();
+
+      console.log(data);
+
+      // Reset and Redirect
+      setEmail('');
+      setPassword('');
+      history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -55,7 +66,6 @@ const Signup = () => {
       <input 
         type="submit" 
         value="Sign up"
-        disabled={!isValid}
       /> 
 
       <p>Already have an account?<Link to="/login">Login</Link></p>
