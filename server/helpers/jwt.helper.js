@@ -16,6 +16,7 @@ const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   
   if (token) {
+    console.log("has token");
     // Callback
     const verifyCallBack = async (err, decodedToken) => {
       if (err) {
@@ -23,10 +24,15 @@ const checkUser = (req, res, next) => {
         res.decodedUser = null;
         next();
       } else {
+        // Happy Path
         console.log(decodedToken);
         // Check the db for this user
         let user = await User.findById(decodedToken.id);
-        res.decodedUser = user;
+
+        if (user) {
+          res.decodedUser = true;
+        }
+
         next();
       }
     };

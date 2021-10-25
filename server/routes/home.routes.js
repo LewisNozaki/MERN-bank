@@ -1,9 +1,10 @@
 const { Router } = require("express");
+const { checkUser } = require("../helpers/jwt.helper");
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send({ currentPage: "home-page"});
+router.get("/", checkUser, (req, res) => {
+  res.json({ currentPage: "home-page"});
 });
 
 module.exports = router;

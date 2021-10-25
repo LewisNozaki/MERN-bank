@@ -1,18 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
+  const usernameInput = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const passwordInput = (e) => {
+    setPassword(e.target.value);
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    console.log("user input:", { email, password });
+
+    try {
+      const result = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      })
+
+      const data = await result.json();
+
+      console.log(data);
+      
+      // Reset and Redirect
+      setEmail('');
+      setPassword('');
+      // history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
   return (
-    <form className={styles["login-form"]}>
+    <form className={styles["login-form"]} onSubmit={handleLogin}>
       <h2>Log In</h2>
       <label htmlFor="email">Email:</label>
-      <input type="email" name="email" required />
+      <input 
+        type="email" 
+        name="email"
+        value={email}
+        onChange={usernameInput}
+        autoComplete="off"
+        required 
+      />
       
       <label htmlFor="password">Password:</label>
-      <input type="password" name="password" required />
+      <input 
+        type="password" 
+        name="password" 
+        value={password}
+        onChange={passwordInput}
+        autoComplete="off"
+        required
+      />
       
-      <input type="submit" value="Log in" /> 
+      <input 
+        type="submit" 
+        value="Log in" 
+      /> 
 
       <p>Don't have an account?<Link to="/signup">Sign up</Link></p>
     </form>

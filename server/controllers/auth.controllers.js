@@ -54,9 +54,9 @@ const login_post = async (req, res) => {
 
     // Save the JWT as a cookie
     res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 3 * 24 * 60 * 60});
-
+    
     // final response to front end
-    res.status(200).json({ userID: user._id });
+    res.status(200).json({ user });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
