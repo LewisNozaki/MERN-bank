@@ -1,0 +1,28 @@
+.main-header {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 50px;
+}
+
+.main-header  ul {
+  display: flex;
+  align-items: center;
+}
+
+.main-header  li {
+  margin-left: 20px;
+}
+
+.main-header  li a {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  display: block;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+}

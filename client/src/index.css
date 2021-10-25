@@ -26,3 +26,11 @@ h1, h2, h3, h4, ul, li, a, p, input, label, button, div, footer {
   font-family: 'Quicksand', sans-serif;
   color: #444;
 }
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}

@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 // Routes imports
 const homeRouter = require("./routes/home.routes");
 
-
 require("dotenv").config({ path: path.join(rootDir, "secure", ".env") });
 
 const PORT = process.env.PORT || 5000;
