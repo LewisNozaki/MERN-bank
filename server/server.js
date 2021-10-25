@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 
 // Routes imports
 const homeRouter = require("./routes/home.routes");
+const authRouter = require("./routes/auth.routes");
 
 require("dotenv").config({ path: path.join(rootDir, "secure", ".env") });
 
@@ -27,5 +28,10 @@ mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology:
   .catch(err => console.log(err));
 
 // Routes
+app.use(authRouter);
+
 app.use(homeRouter);
+
+// 404 page
+app.use((req, res) => res.status(404).render('404'));
 

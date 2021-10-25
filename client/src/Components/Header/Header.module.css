@@ -9,20 +9,30 @@
   margin-bottom: 50px;
 }
 
-.main-header  ul {
+.main-header ul {
   display: flex;
   align-items: center;
 }
 
-.main-header  li {
+.main-header li {
   margin-left: 20px;
 }
 
-.main-header  li a {
+.main-header li a {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.8em;
   display: block;
   padding: 10px 16px;
   letter-spacing: 2px;
+}
+
+.btn {
+  border-radius: 36px;
+  background: aquamarine;
+  transition: 0.3s ease all;
+}
+
+.btn:hover {
+  background: rgb(127, 255, 242);
 }
