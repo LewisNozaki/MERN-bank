@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Database connection & app start
-mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+mongoose.connect(process.env.dbURI)
   .then(result => {
     console.log("connected to MongoDB Atlas");
     app.listen(PORT, () => console.log("server running on port", PORT));
