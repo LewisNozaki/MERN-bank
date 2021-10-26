@@ -16,12 +16,16 @@ const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   
   if (!token) {
-    res.status(400).json({ auth: false, message: "No token found" });
+    // res.status(400).json({ auth: false, message: "No token found" });
+    req.isAuth = false;
+    next()
   } else {
     jwt.verify(token, process.env.JWTSECRET, async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
-        res.status(400).json({ error: "Could not authenticate." });
+        req.isAuth = false;
+        // res.status(400).json({ error: "Could not authenticate." });
+        next()
       } else {
         console.log("decoded:", decodedToken);
 

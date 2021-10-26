@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
 
     console.log("user input:", { email, password });
-
+    
     try {
       const result = await fetch("/login", {
         method: "POST",
