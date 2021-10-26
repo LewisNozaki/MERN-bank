@@ -16,19 +16,16 @@ const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   
   if (!token) {
-    // res.status(400).json({ auth: false, message: "No token found" });
     req.isAuth = false;
     next()
   } else {
     jwt.verify(token, process.env.JWTSECRET, async (err, decodedToken) => {
       if (err) {
-        console.log(err.message);
         req.isAuth = false;
-        // res.status(400).json({ error: "Could not authenticate." });
         next()
       } else {
-        console.log("decoded:", decodedToken);
-
+        // console.log("decoded:", decodedToken);
+        
         let user = await User.findById(decodedToken.id);
 
         req.userInfo = { email: user.email, id: user._id };

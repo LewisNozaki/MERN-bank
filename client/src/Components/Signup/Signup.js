@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 import styles from "./Signup.module.css";
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
   let history = useHistory();
+
+  const contextData = useContext(AuthContext);
   
   const usernameInput = (e) => {
     setEmail(e.target.value);
@@ -25,15 +28,17 @@ const Signup = () => {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" }
       })
-
+      
       const data = await result.json();
 
       console.log(data);
 
+      contextData.onSignup();
+
       // Reset and Redirect
       setEmail('');
       setPassword('');
-      history.push("/");
+      history.push("/profile");
     } catch (err) {
       console.log(err);
     }

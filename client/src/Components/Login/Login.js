@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 import styles from "./Login.module.css";
 
 const Login = () => {
@@ -7,6 +8,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   let history = useHistory();
+
+  const contextData = useContext(AuthContext);
   
   const usernameInput = (e) => {
     setEmail(e.target.value);
@@ -15,12 +18,10 @@ const Login = () => {
   const passwordInput = (e) => {
     setPassword(e.target.value);
   }
-
+  
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log("user input:", { email, password });
-    
     try {
       const result = await fetch("/login", {
         method: "POST",
@@ -31,6 +32,8 @@ const Login = () => {
       const data = await result.json();
 
       console.log(data);
+
+      contextData.onLogin();
 
       // Reset and Redirect
       setEmail('');

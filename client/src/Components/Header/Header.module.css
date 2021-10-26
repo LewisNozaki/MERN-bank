@@ -18,13 +18,16 @@
   margin-left: 20px;
 }
 
-.main-header li a {
+.main-header li a,
+button {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.8em;
   display: block;
   padding: 10px 16px;
   letter-spacing: 2px;
+  border: none;
+  cursor: pointer;
 }
 
 .btn {
