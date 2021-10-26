@@ -9,6 +9,7 @@ const cors = require("cors");
 // Routes imports
 const homeRouter = require("./routes/home.routes");
 const authRouter = require("./routes/auth.routes");
+const profileRouter = require("./routes/profile.routes");
 const { checkUser } = require("./helpers/jwt.helper");
 
 require("dotenv").config({ path: path.join(rootDir, "secure", ".env") });
@@ -39,9 +40,11 @@ mongoose.connect(process.env.dbURI)
   .catch(err => console.log(err));
 
 // Routes
-app.use("*", checkUser);
+// app.use("*", checkUser);
 
 app.use(authRouter);
+
+app.use(profileRouter);
 
 app.use(homeRouter);
 

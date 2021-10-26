@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  let history = useHistory();
   
   const usernameInput = (e) => {
     setEmail(e.target.value);
@@ -25,15 +27,15 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" }
       })
-
+      
       const data = await result.json();
 
       console.log(data);
-      
+
       // Reset and Redirect
       setEmail('');
       setPassword('');
-      // history.push("/");
+      history.push("/profile");
     } catch (err) {
       console.log(err);
     }

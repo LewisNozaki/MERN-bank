@@ -4,6 +4,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import Home from "./components/Home/Home";
 import NotFound from "./components/NotFound/NotFound";
+import Profile from "./components/Profile/Profile";
 import Header from "./components/Header/Header";
 
 const App = () => {
@@ -22,6 +23,9 @@ const App = () => {
             />
             <Route path="/signup/" exact
               component={Signup}
+            />
+            <Route path="/profile/" exact
+              component={Profile}
             />
             <Route path="*" exact
               component={NotFound}

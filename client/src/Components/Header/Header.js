@@ -7,6 +7,7 @@ const Header = () => {
     <nav className={styles["main-header"]}>
       <h1><Link to="/">MERN Bank</Link></h1>
       <ul>
+        <li><Link to="/profile">profile</Link></li>
         <li><Link to="/login">Login</Link></li>
         <li><Link to="/signup" className={styles.btn}>Signup</Link></li>
       </ul>

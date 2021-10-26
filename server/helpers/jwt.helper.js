@@ -15,32 +15,24 @@ const createToken = (id) => {
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   
-  if (token) {
-    console.log("has token");
-    // Callback
-    const verifyCallBack = async (err, decodedToken) => {
+  if (!token) {
+    res.status(400).json({ auth: false, message: "No token found" });
+  } else {
+    jwt.verify(token, process.env.JWTSECRET, async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
-        res.decodedUser = null;
-        next();
+        res.status(400).json({ error: "Could not authenticate." });
       } else {
-        // Happy Path
-        console.log(decodedToken);
-        // Check the db for this user
+        console.log("decoded:", decodedToken);
+
         let user = await User.findById(decodedToken.id);
 
-        if (user) {
-          res.decodedUser = true;
-        }
+        req.userInfo = { email: user.email, id: user._id };
+        req.isAuth = true;
 
         next();
       }
-    };
-    
-    jwt.verify(token, process.env.JWTSECRET, verifyCallBack);
-  } else {
-    res.decodedUser = null;
-    next();
+    });
   }
 };
 
