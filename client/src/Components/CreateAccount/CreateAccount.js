@@ -18,7 +18,7 @@ const CreateAccount = () => {
   
   const handleAcctOpen = async (e) => {
     e.preventDefault();
-
+    
     console.table({ acctType: acctType, balance });
   }
 
