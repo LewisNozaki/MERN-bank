@@ -14,7 +14,7 @@ const Login = () => {
   const usernameInput = (e) => {
     setEmail(e.target.value);
   };
-
+  
   const passwordInput = (e) => {
     setPassword(e.target.value);
   }
@@ -34,7 +34,7 @@ const Login = () => {
       console.log(data);
 
       contextData.onLogin();
-
+      
       // Reset and Redirect
       setEmail('');
       setPassword('');

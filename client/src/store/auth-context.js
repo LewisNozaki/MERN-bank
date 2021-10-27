@@ -3,6 +3,8 @@ import React, { useState, createContext } from "react";
 const AuthContext = createContext({
   isAuth: false,
   isLoggedIn: false,
+  userData: {},
+  onCheck: () => {},
   onAuth: () => {},
   onLogin: () => {},
   onSignup: () => {},
@@ -12,6 +14,7 @@ const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const [ isAuth, setIsAuth ] = useState(false);
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [ userData, setUserData ] = useState({});
 
   const loginHandler = () => {
     setIsAuth(true);
@@ -28,7 +31,6 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logoutHandler = async () => {
-    console.log("logging out...");
     try {
       const response = await fetch("/logout");
 
@@ -42,10 +44,32 @@ export const AuthProvider = ({ children }) => {
       console.log(err);
     }
   };
+  
+  const checkJWT = async () => {
+    try {
+      const response = await fetch("/profile");
+    
+      const data = await response.json();
+  
+      if (data.isAuth) {
+        setIsAuth(true);
+        setUserData(prevState => ({
+          ...prevState,
+          data
+        }))
+      }
+      
+      return isAuth;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const authContextValue = {
     isAuth: isAuth,
     isLoggedIn: isLoggedIn,
+    userData: userData,
+    onCheck: checkJWT,
     onAuth: authHandler,
     onLogin: loginHandler,
     onSignup: signUpHandler,

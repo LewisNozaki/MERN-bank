@@ -51,7 +51,7 @@ const login_post = async (req, res) => {
 
     // Create a token with jwt
     const token = await createToken(user._id);
-
+    
     // Save the JWT as a cookie
     res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 3 * 24 * 60 * 60});
     

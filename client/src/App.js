@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import NotFound from "./components/NotFound/NotFound";
 import Profile from "./components/Profile/Profile";
 import Header from "./components/Header/Header";
+import PrivateRoute from './privateRoute/PrivateRoute';
 
 const App = () => {
   return (
@@ -18,13 +19,13 @@ const App = () => {
             <Route path="/" exact
               component={Home}
             />
-            <Route path="/login/" exact
+            <Route path="/login" exact
               component={Login}
             />
-            <Route path="/signup/" exact
+            <Route path="/signup" exact
               component={Signup}
             />
-            <Route path="/profile/" exact
+            <PrivateRoute path="/profile" exact
               component={Profile}
             />
             <Route path="*" exact

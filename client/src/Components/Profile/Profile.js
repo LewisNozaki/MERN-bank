@@ -1,33 +1,31 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
+// import AuthContext from "../../store/auth-context";
 import { useHistory } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
 
-const Profile = () => {
+const Profile = (props) => {
   const [userEmail, setUserEmail] = useState();
 
-  const contextData = useContext(AuthContext);
+  // const contextData = useContext(AuthContext);
 
-  let history = useHistory();
+  // let history = useHistory();
   
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/profile");
       
       const data = await response.json();
-
+      
       if (data.isAuth) {
-        contextData.onAuth();
         setUserEmail(data.userInfo.email);
-        console.log(data);
       }
 
-      if (!data.isAuth) {
-        history.push("/login");
-      }
+      // if (!data.isAuth) {
+      //   history.push("/login");
+      // }
     }
     
     fetchData();
-  }, [ history, contextData ])
+  }, [])
 
   return (
     <div>
