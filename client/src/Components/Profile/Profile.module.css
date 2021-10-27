@@ -1,0 +1,23 @@
+.accts-container {
+  /* border: 1px solid black; */
+  margin-top: 2rem;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.add-acct {
+  border-radius: 10px;
+  border: 1px solid #333;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8em;
+  text-align: center;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

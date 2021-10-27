@@ -8,14 +8,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   let history = useHistory();
-
+  
   const contextData = useContext(AuthContext);
-
+  
   useEffect(() => {
-    if (contextData.isAuth) {
+    if (contextData.isAuth) {;
       history.push("/profile");
     }
-  }, [history, contextData.isAuth])
+  }, [history, contextData])
   
   const usernameInput = (e) => {
     setEmail(e.target.value);

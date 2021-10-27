@@ -21,11 +21,29 @@ const passwordReq = {
   minlength: [6, "The minimum password length is 6 characters."]
 };
 
+const historySchema = new Schema({
+  amount: {
+    type: Number,
+    required: true
+  }
+}, { timestamps: true })
 
+const accountSchema = new Schema({
+  acctType: {
+    type: String,
+    required: true
+  },
+  balance: {
+    type: Number,
+    required: true
+  },
+  history: [historySchema]
+}, { timestamps: true })
 
 const userSchema = new Schema({
   email: emailReq,
-  password: passwordReq
+  password: passwordReq,
+  accounts: [accountSchema]
 }, { timestamps: true });
 
 // Pre method - hash password

@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import NotFound from "./components/NotFound/NotFound";
 import Profile from "./components/Profile/Profile";
 import Header from "./components/Header/Header";
+import CreateAccount from "./components/CreateAccount/CreateAccount";
 import PrivateRoute from './privateRoute/PrivateRoute';
 
 const App = () => {
@@ -27,6 +28,9 @@ const App = () => {
             />
             <PrivateRoute path="/profile" exact
               component={Profile}
+            />
+            <PrivateRoute path="/account/open" exact
+              component={CreateAccount}
             />
             <Route path="*" exact
               component={NotFound}

@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [ isAuth, setIsAuth ] = useState(existingAuth);
   const [ isLoggedIn, setIsLoggedIn ] = useState(existingLogin);
   const [ userData, setUserData ] = useState({});
-
+  
   const loginHandler = async (email, password) => {
     try {
       const result = await fetch("/login", {
@@ -29,15 +29,16 @@ export const AuthProvider = ({ children }) => {
       
       const data = await result.json();
 
+      const parsedData = await data.user;
+
       setIsAuth(true);
       setIsLoggedIn(true);
       setUserData(prevState => ({
         ...prevState,
-        data
+        ...parsedData
       }));
       localStorage.setItem("isLoggedIn", 1);
       localStorage.setItem("isAuth", 1);
-      localStorage.setItem("userData", data);
     } catch (err) {
       console.log(err);
     }
@@ -62,6 +63,7 @@ export const AuthProvider = ({ children }) => {
 
       setIsAuth(false);
       setIsLoggedIn(false);
+      setUserData({});
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("isAuth");
     } catch (err) {
