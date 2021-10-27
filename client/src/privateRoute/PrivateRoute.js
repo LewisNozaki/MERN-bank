@@ -4,14 +4,12 @@ import AuthContext from "../store/auth-context";
 
 const PrivateRoute = ({ component:Component, ...rest }) => {
   const contextData = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   contextData.onCheck()
-  // }, [contextData])
-
+  
   return (
     <>
-      <Route {...rest} render={() => contextData.isAuth ? <Component /> : <Redirect to="/login" />} />
+      <Route {...rest} render={(props) => contextData.isAuth ? 
+        <Component {...props}/> : 
+        <Redirect to="/login" />} />
     </>
   )
 };

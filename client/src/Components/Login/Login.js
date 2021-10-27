@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import styles from "./Login.module.css";
@@ -10,6 +10,12 @@ const Login = () => {
   let history = useHistory();
 
   const contextData = useContext(AuthContext);
+
+  useEffect(() => {
+    if (contextData.isAuth) {
+      history.push("/profile");
+    }
+  }, [history, contextData.isAuth])
   
   const usernameInput = (e) => {
     setEmail(e.target.value);
@@ -22,26 +28,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const result = await fetch("/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" }
-      })
-      
-      const data = await result.json();
-
-      console.log(data);
-
-      contextData.onLogin();
-      
-      // Reset and Redirect
-      setEmail('');
-      setPassword('');
-      history.push("/profile");
-    } catch (err) {
-      console.log(err);
-    }
+    contextData.onLogin(email, password);
   }
   
   return (

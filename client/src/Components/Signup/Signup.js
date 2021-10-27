@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import styles from "./Signup.module.css";
@@ -10,6 +10,13 @@ const Signup = () => {
   let history = useHistory();
 
   const contextData = useContext(AuthContext);
+
+  useEffect(() => {
+    if (contextData.isAuth) {
+      history.push("/profile");
+    }
+  }, [history, contextData.isAuth])
+
   
   const usernameInput = (e) => {
     setEmail(e.target.value);

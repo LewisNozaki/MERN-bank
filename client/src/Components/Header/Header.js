@@ -7,7 +7,7 @@ const Header = () => {
   const contextData = useContext(AuthContext);
 
   let history = useHistory("/");
-
+  
   const handleLogOut = () => {
     contextData.onLogout();
 

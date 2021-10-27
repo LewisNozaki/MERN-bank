@@ -21,6 +21,8 @@ const passwordReq = {
   minlength: [6, "The minimum password length is 6 characters."]
 };
 
+
+
 const userSchema = new Schema({
   email: emailReq,
   password: passwordReq

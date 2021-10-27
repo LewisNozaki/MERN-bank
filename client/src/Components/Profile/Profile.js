@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import AuthContext from "../../store/auth-context";
-import { useHistory } from "react-router-dom";
 
-const Profile = (props) => {
+const Profile = () => {
   const [userEmail, setUserEmail] = useState();
-
-  // const contextData = useContext(AuthContext);
-
-  // let history = useHistory();
   
   useEffect(() => {
     const fetchData = async () => {
@@ -18,10 +12,6 @@ const Profile = (props) => {
       if (data.isAuth) {
         setUserEmail(data.userInfo.email);
       }
-
-      // if (!data.isAuth) {
-      //   history.push("/login");
-      // }
     }
     
     fetchData();

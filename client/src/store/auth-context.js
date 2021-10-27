@@ -12,13 +12,35 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
-  const [ isAuth, setIsAuth ] = useState(false);
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  const existingAuth = Boolean(localStorage.getItem("isAuth") || "");
+  const existingLogin = Boolean(localStorage.getItem("isLoggedIn") || "");
+  
+  const [ isAuth, setIsAuth ] = useState(existingAuth);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(existingLogin);
   const [ userData, setUserData ] = useState({});
 
-  const loginHandler = () => {
-    setIsAuth(true);
-    setIsLoggedIn(true);
+  const loginHandler = async (email, password) => {
+    try {
+      const result = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      })
+      
+      const data = await result.json();
+
+      setIsAuth(true);
+      setIsLoggedIn(true);
+      setUserData(prevState => ({
+        ...prevState,
+        data
+      }));
+      localStorage.setItem("isLoggedIn", 1);
+      localStorage.setItem("isAuth", 1);
+      localStorage.setItem("userData", data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const authHandler = () => {
@@ -40,12 +62,14 @@ export const AuthProvider = ({ children }) => {
 
       setIsAuth(false);
       setIsLoggedIn(false);
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("isAuth");
     } catch (err) {
       console.log(err);
     }
   };
   
-  const checkJWT = async () => {
+  const getUserInfo = async () => {
     try {
       const response = await fetch("/profile");
     
@@ -53,23 +77,24 @@ export const AuthProvider = ({ children }) => {
   
       if (data.isAuth) {
         setIsAuth(true);
+        setIsLoggedIn(true);
         setUserData(prevState => ({
           ...prevState,
           data
         }))
       }
-      
-      return isAuth;
     } catch (err) {
       console.log(err);
     }
+
+    return userData;
   }
 
   const authContextValue = {
     isAuth: isAuth,
     isLoggedIn: isLoggedIn,
     userData: userData,
-    onCheck: checkJWT,
+    onCheck: getUserInfo,
     onAuth: authHandler,
     onLogin: loginHandler,
     onSignup: signUpHandler,
