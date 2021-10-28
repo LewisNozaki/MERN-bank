@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import styles from "./Login.module.css";
+import { GoogleLogin } from "react-google-login";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -34,7 +35,8 @@ const Login = () => {
   };
   
   return (
-    <form className={styles["login-form"]} onSubmit={handleLogin}>
+    <div className={styles["login-form"]}>
+    <form onSubmit={handleLogin}>
       <h2>Log In</h2>
       <label htmlFor="email">Email:</label>
       <input 
@@ -59,10 +61,18 @@ const Login = () => {
       <input 
         type="submit" 
         value="Log in" 
-      /> 
-
-      <p>Don't have an account?<Link to="/signup">Sign up</Link></p>
+      />
     </form>
+    
+    <GoogleLogin 
+    clientId="GoogleID"
+    render={() => (
+      <button className={styles["google-btn"]}><img alt="" src="https://www.pngkit.com/png/full/178-1783296_g-transparent-circle-google-logo.png"></img>Sign in with Google</button>
+    )}
+    />
+
+    <p>Don't have an account?<Link to="/signup">Sign up</Link></p>  
+  </div>
   )
 };
 

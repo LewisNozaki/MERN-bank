@@ -6,7 +6,7 @@ import styles from "./Profile.module.css";
 const Profile = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userInfo, setUserInfo] = useState({});
-  const [isMounted, setIsMounted] = useState(true)
+  // const [isMounted, setIsMounted] = useState(true)
 
   const contextData = useContext(AuthContext);
   
