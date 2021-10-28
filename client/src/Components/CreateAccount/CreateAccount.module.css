@@ -1,0 +1,48 @@
+.ca-form {
+  width: 360px;
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 30px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: white;
+}
+
+.ca-form a {
+  color: cornflowerblue;
+  margin-left: 0.5rem;
+  text-align: center;
+}
+
+.ca-form a, 
+.ca-form p {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.ca-form input {
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+  width: 100%;
+}
+
+.ca-form input[type=submit] {
+  margin: 2rem 0;
+  background: aquamarine;
+  border: none;
+  transition: 0.3s ease all;
+  cursor: pointer;
+  border-radius: 36px;
+}
+
+.ca-form input[type=submit]:hover {
+  background: rgb(127, 255, 242);
+}
+
+.ca-form label {
+  display: block;
+  margin: 20px 0 10px;
+}
+

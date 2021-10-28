@@ -29,7 +29,7 @@ const historySchema = new Schema({
 }, { timestamps: true })
 
 const accountSchema = new Schema({
-  acctType: {
+  acctName: {
     type: String,
     required: true
   },
@@ -48,11 +48,17 @@ const userSchema = new Schema({
 
 // Pre method - hash password
 userSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  
-  this.password = await bcrypt.hash(this.password, salt);
+  let user = this;
 
-  next();
+  if (!user.isModified("password")) {
+    return next();
+  } else {
+    const salt = await bcrypt.genSalt();
+    
+    this.password = await bcrypt.hash(this.password, salt);
+  
+    return next();
+  }
 });
 
 // Custom atatic method on user model for login
@@ -65,7 +71,7 @@ userSchema.statics.login = async function(email, password) {
     if (auth) {
       return user
     }
-    
+    console.log(password);
     throw Error("Incorrect password");
   }
 

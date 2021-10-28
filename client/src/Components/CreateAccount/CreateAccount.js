@@ -1,39 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import { useHistory } from "react-router";
+import styles from "./CreateAccount.module.css";
 
 const CreateAccount = () => {
-  const [acctType, setAcctType] = useState("checking");
+  const [acctName, setAcctName] = useState("");
   const [balance, setBalance] = useState(0);
 
+  const contextData = useContext(AuthContext);
+  
   let history = useHistory();
   
-  const acctTypeInput = (e) => {
-    console.log(e.target.value);
-    setAcctType(e.target.value);
+  const acctNameInput = (e) => {
+    setAcctName(e.target.value);
   };
   
   const balanceInput = (e) => {
     setBalance(e.target.value);
-  }
+  };
   
   const handleAcctOpen = async (e) => {
     e.preventDefault();
-    
-    console.table({ acctType: acctType, balance });
-  }
 
+    console.table({ acctName, balance, id: localStorage.getItem("userID") });
+    contextData.onCreateAcct(acctName, balance, localStorage.getItem("userID"));
+
+    setAcctName("");
+    setBalance("");
+    history.push("/profile");
+  };
+  
   return (
     <>
       <h1>Open a new account:</h1>
-      <form onSubmit={handleAcctOpen}>
-        <label htmlFor="account-type">Account Type:</label>
-        <select 
-          value={acctType} 
-          onChange={acctTypeInput}
-          required>
-            <option value="checking">checking</option>
-            <option value="savings">savings</option>
-          </select>
+      <form onSubmit={handleAcctOpen} className={styles["ca-form"]}>
+        <label htmlFor="account-name">Account Name:</label>
+        <input 
+          type="text" 
+          name="account-name" 
+          value={acctName}
+          onChange={acctNameInput}
+          autoComplete="off"
+          required
+        />
         
         <label htmlFor="balance">Balance:</label>
         <input 
@@ -42,12 +51,13 @@ const CreateAccount = () => {
           value={balance}
           onChange={balanceInput}
           autoComplete="off"
+          min="0"
           required
         />
         
         <input 
           type="submit" 
-          value="Open Account" 
+          value="Create Account" 
         />
     </form>
     </>

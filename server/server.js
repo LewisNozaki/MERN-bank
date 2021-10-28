@@ -10,6 +10,7 @@ const cors = require("cors");
 const homeRouter = require("./routes/home.routes");
 const authRouter = require("./routes/auth.routes");
 const profileRouter = require("./routes/profile.routes");
+const accountRouter = require("./routes/account.routes");
 const { checkUser } = require("./helpers/jwt.helper");
 
 require("dotenv").config({ path: path.join(rootDir, "secure", ".env") });
@@ -45,6 +46,8 @@ mongoose.connect(process.env.dbURI)
 app.use(authRouter);
 
 app.use(profileRouter);
+
+app.use(accountRouter);
 
 app.use(homeRouter);
 

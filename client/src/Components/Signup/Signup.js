@@ -21,34 +21,17 @@ const Signup = () => {
   const usernameInput = (e) => {
     setEmail(e.target.value);
   };
-
+  
   const passwordInput = (e) => {
     setPassword(e.target.value);
   }
   
-  const handleSignup = async (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    
-    try {
-      const result = await fetch("/signup", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" }
-      })
-      
-      const data = await result.json();
+    contextData.onSignup(email, password);
 
-      console.log(data);
-
-      contextData.onSignup();
-
-      // Reset and Redirect
-      setEmail('');
-      setPassword('');
-      history.push("/profile");
-    } catch (err) {
-      console.log(err);
-    }
+    setEmail('');
+    setPassword('');
   };
 
   return (

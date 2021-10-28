@@ -8,7 +8,7 @@ router.get("/profile", checkUser, (req, res) => {
   const isAuth = req.isAuth;
   
   if (userInfo && isAuth) {
-    res.status(200).json({ currentPage: "profile-page", userInfo, isAuth });
+    res.status(200).json({ userInfo, isAuth });
   }
   
   if (!isAuth) {

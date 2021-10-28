@@ -4,6 +4,8 @@ const AuthContext = createContext({
   isAuth: false,
   isLoggedIn: false,
   userData: {},
+  setUserInfo: () => {},
+  onCreateAcct: () => {},
   onCheck: () => {},
   onAuth: () => {},
   onLogin: () => {},
@@ -28,17 +30,16 @@ export const AuthProvider = ({ children }) => {
       })
       
       const data = await result.json();
-
-      const parsedData = await data.user;
-
+      
       setIsAuth(true);
       setIsLoggedIn(true);
       setUserData(prevState => ({
         ...prevState,
-        ...parsedData
+        ...data
       }));
       localStorage.setItem("isLoggedIn", 1);
       localStorage.setItem("isAuth", 1);
+      localStorage.setItem("userID", data["_id"]);
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +49,28 @@ export const AuthProvider = ({ children }) => {
     setIsAuth(true);
   };
 
-  const signUpHandler = () => {
+  const signUpHandler = async (email, password) => {
+    try {
+      const result = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      })
+      
+      const data = await result.json();
+      
+      setIsAuth(true);
+      setIsLoggedIn(true);
+      setUserData(prevState => ({
+        ...prevState,
+        ...data
+      }));
+      localStorage.setItem("isLoggedIn", 1);
+      localStorage.setItem("isAuth", 1);
+      localStorage.setItem("userID", data["_id"]);
+    } catch (err) {
+      console.log(err);
+    }
     setIsAuth(true);
     setIsLoggedIn(true);
   }
@@ -66,6 +88,7 @@ export const AuthProvider = ({ children }) => {
       setUserData({});
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("isAuth");
+      localStorage.removeItem("userID");
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +97,7 @@ export const AuthProvider = ({ children }) => {
   const getUserInfo = async () => {
     try {
       const response = await fetch("/profile");
-    
+      
       const data = await response.json();
   
       if (data.isAuth) {
@@ -90,12 +113,40 @@ export const AuthProvider = ({ children }) => {
     }
 
     return userData;
-  }
+  };
+
+  const setUserInfo = (data) => {
+    setUserData(prevState => ({
+      ...prevState,
+      ...data
+    }));
+  };
+  
+  const createAcctHandler = async (acctName, balance, id) => {
+    try {
+      const result = await fetch("/account/open", {
+        method: "POST",
+        body: JSON.stringify({ acctName, balance, id }),
+        headers: { "Content-Type": "application/json" }
+      })
+      
+      const data = await result.json();
+      
+      setUserData(prevState => ({
+        ...prevState,
+        ...data
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const authContextValue = {
     isAuth: isAuth,
     isLoggedIn: isLoggedIn,
     userData: userData,
+    setUserInfo: setUserInfo,
+    onCreateAcct: createAcctHandler,
     onCheck: getUserInfo,
     onAuth: authHandler,
     onLogin: loginHandler,

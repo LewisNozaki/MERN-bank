@@ -5,7 +5,7 @@ import styles from "./Header.module.css";
 
 const Header = () => {
   const contextData = useContext(AuthContext);
-
+  
   let history = useHistory("/");
   
   const handleLogOut = () => {

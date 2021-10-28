@@ -24,11 +24,9 @@ const checkUser = (req, res, next) => {
         req.isAuth = false;
         next()
       } else {
-        // console.log("decoded:", decodedToken);
-        
         let user = await User.findById(decodedToken.id);
 
-        req.userInfo = { email: user.email, id: user._id };
+        req.userInfo = user;
         req.isAuth = true;
 
         next();

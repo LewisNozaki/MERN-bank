@@ -16,7 +16,7 @@ const signup_get = (req, res) => {
 const signup_post = async (req, res) => {
   const { email, password } = req.body; 
 
-  try {
+  try {    
     // Create a new user
     const user = await User.create({ email, password });
 
@@ -27,7 +27,7 @@ const signup_post = async (req, res) => {
     res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 3 * 24 * 60 * 60});
     
     // final response to front end
-    res.status(200).json({ email: user.email, id: user._id });
+    res.status(200).json(user);
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -50,13 +50,13 @@ const login_post = async (req, res) => {
     const user = await User.login(email, password);
 
     // Create a token with jwt
-    const token = await createToken(user._id);
+    const token = await createToken(user["_id"]);
     
     // Save the JWT as a cookie
     res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 3 * 24 * 60 * 60});
     
     // final response to front end
-    res.status(200).json({ user });
+    res.status(200).json(user);
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });

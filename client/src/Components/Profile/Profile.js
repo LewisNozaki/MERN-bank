@@ -4,40 +4,57 @@ import AuthContext from "../../store/auth-context";
 import styles from "./Profile.module.css";
 
 const Profile = () => {
-  const [userEmail, setUserEmail] = useState();
-  // const [userData, setUserData] = useState({});
+  const [userEmail, setUserEmail] = useState("");
+  const [userInfo, setUserInfo] = useState({});
+  const [isMounted, setIsMounted] = useState(true)
 
-  let contextData = useContext(AuthContext);
-
+  const contextData = useContext(AuthContext);
+  
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/profile");
+    setUserEmail(contextData.userData.email);
+    setUserInfo(contextData.userData);
+
+    // if (isMounted) {
+    //   const fetchData = async () => {
+    //     const response = await fetch("/profile");
+        
+    //     const data = await response.json();
+        
+    //     if (data.isAuth) {
+    //       setUserEmail(data.userInfo.email);
+    //       setUserInfo(data.userInfo);
+    //     }
+    //   }
       
-      const data = await response.json();
-      
-      if (data.isAuth) {
-        setUserEmail(data.userInfo.email);
-      }
-    }
+    //   fetchData();
+    // }
     
-    fetchData();
-  }, [])
+    // setIsMounted(false);
+  }, [contextData])
   
   return (
     <>
-      {console.log(contextData.userData["_id"])}
+      {console.log(userInfo.accounts)}
       {userEmail && 
       <div>
         <h1>{`Welcome back, ${userEmail}`}!</h1>
         <div className={styles["accts-container"]}>
+        {userInfo.accounts.map(acct => {
+          return (
+            <div key={acct["_id"]} className={styles["add-acct"]}> 
+              <div>{acct.acctName}</div>
+              <div>{acct.balance}</div>
+            </div>
+          )
+        })}
+          <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
+          {/* <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
           <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
           <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
           <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
           <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
           <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
-          <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
-          <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
-          <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link>
+          <Link to="/account/open" className={styles["add-acct"]}>Open a new account</Link> */}
         </div>
       </div>
       }

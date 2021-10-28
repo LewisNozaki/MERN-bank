@@ -27,9 +27,11 @@ const Login = () => {
   
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    
     contextData.onLogin(email, password);
-  }
+    setEmail("");
+    setPassword("");
+  };
   
   return (
     <form className={styles["login-form"]} onSubmit={handleLogin}>
