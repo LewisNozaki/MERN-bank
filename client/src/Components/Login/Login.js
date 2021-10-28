@@ -33,6 +33,25 @@ const Login = () => {
     setEmail("");
     setPassword("");
   };
+
+  const googleSuccess = async (res) => {
+    console.log(res)
+    const email = res?.profileObj.email;
+    const password = res?.tokenId;
+    
+    try {
+      const response = await contextData.onGlLogin(email, password);
+
+      console.log(response);
+
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const googleFailure = (err) => console.log("Google sign in was not successful.", err);
   
   return (
     <div className={styles["login-form"]}>
@@ -63,12 +82,22 @@ const Login = () => {
         value="Log in" 
       />
     </form>
-    
+
     <GoogleLogin 
-    clientId="GoogleID"
-    render={() => (
-      <button className={styles["google-btn"]}><img alt="" src="https://www.pngkit.com/png/full/178-1783296_g-transparent-circle-google-logo.png"></img>Sign in with Google</button>
-    )}
+      clientId="1070274722780-0b22ojvm6ikn9nc5vfge7oibdujvspta.apps.googleusercontent.com"
+      render={(props) => (
+        <button 
+          className={styles["google-btn"]}
+          onClick={props.onClick}
+          disabled={props.disabled}
+          >
+          <img alt="" src="https://www.pngkit.com/png/full/178-1783296_g-transparent-circle-google-logo.png"></img>
+          Sign in with Google
+        </button>
+      )}
+      onSuccess={googleSuccess}
+      onFailure={googleFailure}
+      cookiePolicy={"single_host_origin"}
     />
 
     <p>Don't have an account?<Link to="/signup">Sign up</Link></p>  

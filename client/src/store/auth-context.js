@@ -11,16 +11,20 @@ const AuthContext = createContext({
   onLogin: () => {},
   onSignup: () => {},
   onLogout: () => {},
+  onGlLogin: () => {},
+  onGLSignup: () => {}
 });
 
 export const AuthProvider = ({ children }) => {
   const existingAuth = Boolean(localStorage.getItem("isAuth") || "");
   const existingLogin = Boolean(localStorage.getItem("isLoggedIn") || "");
   
+  // State
   const [ isAuth, setIsAuth ] = useState(existingAuth);
   const [ isLoggedIn, setIsLoggedIn ] = useState(existingLogin);
   const [ userData, setUserData ] = useState({});
   
+  // Login Handler
   const loginHandler = async (email, password) => {
     try {
       const result = await fetch("/login", {
@@ -45,10 +49,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Set is auth handler
   const authHandler = () => {
     setIsAuth(true);
   };
 
+  // Sign up handler
   const signUpHandler = async (email, password) => {
     try {
       const result = await fetch("/signup", {
@@ -75,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(true);
   }
 
+  // Logout Handler
   const logoutHandler = async () => {
     try {
       const response = await fetch("/logout");
@@ -94,6 +101,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
   
+  // Get User Info
   const getUserInfo = async () => {
     try {
       const response = await fetch("/profile");
@@ -115,6 +123,7 @@ export const AuthProvider = ({ children }) => {
     return userData;
   };
 
+  // Set User Info
   const setUserInfo = (data) => {
     setUserData(prevState => ({
       ...prevState,
@@ -122,6 +131,7 @@ export const AuthProvider = ({ children }) => {
     }));
   };
   
+  // Create Account
   const createAcctHandler = async (acctName, balance, id) => {
     try {
       const result = await fetch("/account/open", {
@@ -141,6 +151,54 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const googleLoginHandler = async (email, password) => {
+    try {
+      const result = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      })
+      
+      const data = await result.json();
+      
+      setIsAuth(true);
+      setIsLoggedIn(true);
+      setUserData(prevState => ({
+        ...prevState,
+        ...data
+      }));
+      localStorage.setItem("isLoggedIn", 1);
+      localStorage.setItem("isAuth", 1);
+      localStorage.setItem("userID", data["_id"]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const googleSignupHandler = async (email, password) => {
+    try {
+      const result = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      })
+      
+      const data = await result.json();
+      
+      setIsAuth(true);
+      setIsLoggedIn(true);
+      setUserData(prevState => ({
+        ...prevState,
+        ...data
+      }));
+      localStorage.setItem("isLoggedIn", 1);
+      localStorage.setItem("isAuth", 1);
+      localStorage.setItem("userID", data["_id"]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const authContextValue = {
     isAuth: isAuth,
     isLoggedIn: isLoggedIn,
@@ -151,7 +209,9 @@ export const AuthProvider = ({ children }) => {
     onAuth: authHandler,
     onLogin: loginHandler,
     onSignup: signUpHandler,
-    onLogout: logoutHandler
+    onLogout: logoutHandler,
+    onGlLogin: googleLoginHandler,
+    onGLSignup: googleSignupHandler
   };
   
   return (
