@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   const authHandler = () => {
     setIsAuth(true);
   };
-
+  
   // Sign up handler
   const signUpHandler = async (email, password) => {
     try {

@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <h1>Welcome to MERN Bank.</h1>
-      <p>Fast, safe and secure transactions for the modern day worker.</p>
+      <p>Fast, safe and secure transactions for the modern day developer.</p>
       <Link to="/signup" className={styles.btn}>Get started today</Link>
     </div>
   )
