@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       console.log(err);
     }
   };
-
+  
   // Set is auth handler
   const authHandler = () => {
     setIsAuth(true);
